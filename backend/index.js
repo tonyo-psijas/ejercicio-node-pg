@@ -67,6 +67,17 @@ app.put('/items/:id', async (req, res) => {
     
 })
 
-app.delete('/items', async (req, res) => {
-    
+app.delete('/items/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await pool.query("DELETE FROM WHERE id = $1", [id])
+        res.send("Producto eliminado con éxito")
+        
+    } catch (error) {
+        console.error("Error en la consulta POST /items: " + error)
+        res.status(500).json({
+            error: error.code,
+            message: error.message
+        })
+    }
 })
